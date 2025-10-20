@@ -3,61 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>GPA Calculator</title>
     <style>
-        .main {
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(to bottom right, #e3f2fd, #bbdefb);
+            margin: 0;
+            padding: 30px;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+        }
+
+        .subject-row {
             display: flex;
-            gap: 30px;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .subject-row:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .subject-title {
+            flex: 0 0 180px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #34495e;
+            margin: 0;
+        }
+
+        .input-group {
+            flex: 1;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        textarea {
+            width: 120px;
+            height: 40px;
+            padding: 8px;
+            border: 1px solid #dfe6e9;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            resize: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+
+        button {
+            background: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .gpa-result {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 30px;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 8px;
+        }
+
+        .gpa-result h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+
+        #calculatedGPA {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .calculate-all {
+            display: block;
+            margin: 20px auto 0;
+            padding: 12px 30px;
+            font-size: 1rem;
+            background: #2ecc71;
+        }
+
+        .calculate-all:hover {
+            background: #27ae60;
+        }
+
+        @media (max-width: 768px) {
+            .subject-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .subject-title {
+                margin-bottom: 10px;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+
+            textarea {
+                width: 100%;
+            }
+
+            button {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="main">
-        <div>
-            <h4>Single Variable Calculus</h4>
-            <h4>Engineering Mathematics</h4>
-            <h4>Introduction to Biology</h4>
-            <h4>Academic English: Research and Writing</h4>
-            <h4>Introduction to Programming</h4>
-            <h4>Biology Lab 1</h4>
+    <div class="container">
+        <div class="subject-row">
+            <h4 class="subject-title">Single Variable Calculus</h4>
+            <div class="input-group">
+                <textarea id="textarea_svc_assignment" placeholder="Assignment"></textarea>
+                <textarea id="textarea_svc_quiz" placeholder="Quiz"></textarea>
+                <textarea id="textarea_svc_midterm" placeholder="Midterm"></textarea>
+                <textarea id="textarea_svc_final" placeholder="Final"></textarea>
+                <button onclick="SVCcalc()">Calculate SVC GPA</button>
+            </div>
         </div>
-        <div>
-            <textarea id="textarea_svc_assignment">SVC Assignment</textarea>
-            <textarea id="textarea_svc_quiz">SVC Quiz</textarea>
-            <textarea id="textarea_svc_midterm">SVC Midterm</textarea>
-            <textarea id="textarea_svc_final">SVC Final</textarea>
-            <br>
-            <textarea id="textarea_em_assignment">EM Assignment</textarea>
-            <textarea id="textarea_em_midterm">EM Midterm</textarea>
-            <textarea id="textarea_em_final">EM Final</textarea>
-            <br>
-            <textarea id="textarea_1_assignment">Assignment</textarea>
-            <br>
-            <textarea id="textarea_1_assignment">Assignment</textarea>
-            <br>
-            <textarea id="textarea_1_assignment">Assignment</textarea>
-            <br>
-            <textarea id="textarea_1_assignment">Assignment</textarea>
+        <div class="subject-row">
+            <h4 class="subject-title">Engineering Mathematics</h4>
+            <div class="input-group">
+                <textarea id="textarea_em_assignment" placeholder="Assignment"></textarea>
+                <textarea id="textarea_em_midterm" placeholder="Midterm"></textarea>
+                <textarea id="textarea_em_final" placeholder="Final"></textarea>
+                <button onclick="EMcalc()">Calculate EM GPA</button>
+            </div>
         </div>
-        <div>
-            <button onclick="SVCcalc()">Calculate my SVC GPA</button><br><br><br>
-            <button onclick="EMcalc()">Calculate my Eng Math GPA</button>
+        <div class="subject-row">
+            <h4 class="subject-title">Introduction to Biology</h4>
+            <div class="input-group">
+                <textarea id="textarea_bio_assignment" placeholder="Assignment"></textarea>
+            </div>
         </div>
-        <button onclick="GPAcalc()">Calculate my GPA</button>
-    </div>
-    <div class="main">
-        <h3>your GPA is: </h3>
-        <h3 id="calculatedGPA"></h3>
+        <div class="subject-row">
+            <h4 class="subject-title">Academic English</h4>
+            <div class="input-group">
+                <textarea id="textarea_eng_assignment" placeholder="Assignment"></textarea>
+            </div>
+        </div>
+        <div class="subject-row">
+            <h4 class="subject-title">Introduction to Programming</h4>
+            <div class="input-group">
+                <textarea id="textarea_prog_assignment" placeholder="Assignment"></textarea>
+            </div>
+        </div>
+        <div class="subject-row">
+            <h4 class="subject-title">Biology Lab 1</h4>
+            <div class="input-group">
+                <textarea id="textarea_lab_assignment" placeholder="Assignment"></textarea>
+            </div>
+        </div>
+        <button class="calculate-all" onclick="GPAcalc()">Calculate Overall GPA</button>
+        <div class="gpa-result">
+            <h3>Your GPA is:</h3>
+            <h3 id="calculatedGPA"></h3>
+        </div>
     </div>
     <script>
         function GPAcalc() {
             const SVCcalculatedGPA = SVCcalc();
-            console.log(SVCcalculatedGPA);
-
             const EMcalculatedGPA = EMcalc();
-            console.log(EMcalculatedGPA);
-
-            const result = document.getElementById("calculatedGPA").innerHTML = (SVCcalculatedGPA + EMcalculatedGPA)/2;
+            const result = document.getElementById("calculatedGPA").innerHTML = ((SVCcalculatedGPA + EMcalculatedGPA)/2).toFixed(2);
         }
 
         function SVCcalc() {
@@ -66,8 +208,7 @@
             const SVCmidterm = document.getElementById("textarea_svc_midterm").value;
             const SVCfinal = document.getElementById("textarea_svc_final").value;
             const SVCcalculatedGPA = 0.1*4.3 + 0.15*4.3*parseFloat(SVCassignment)/20 + 0.25*4.3*parseFloat(SVCquiz)/24 + 0.25*4.3*parseFloat(SVCmidterm)/100 + 0.25*4.3*parseFloat(SVCfinal)/100;
-            
-            const result = document.getElementById("calculatedGPA").innerHTML = SVCcalculatedGPA;
+            document.getElementById("calculatedGPA").innerHTML = SVCcalculatedGPA.toFixed(2);
             return SVCcalculatedGPA;
         }
 
@@ -76,12 +217,9 @@
             const EMmidterm = document.getElementById("textarea_em_midterm").value;
             const EMfinal = document.getElementById("textarea_em_final").value;
             const EMcalculatedGPA = 0.2*4.3*parseFloat(EMassignment)/100 + 0.4*4.3*parseFloat(EMmidterm)/110 + 0.4*4.3*parseFloat(EMfinal)/100;
-            
-            const result = document.getElementById("calculatedGPA").innerHTML = EMcalculatedGPA;
+            document.getElementById("calculatedGPA").innerHTML = EMcalculatedGPA.toFixed(2);
             return EMcalculatedGPA;
         }
-
     </script>
 </body>
-
 </html>
