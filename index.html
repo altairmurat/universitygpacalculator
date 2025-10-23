@@ -160,8 +160,8 @@
             <h4 class="subject-title">Engineering Mathematics</h4>
             <div class="input-group">
                 <textarea id="textarea_em_assignment" placeholder="Assignment"></textarea>
-                <textarea id="textarea_em_midterm" placeholder="Midterm"></textarea>
-                <textarea id="textarea_em_final" placeholder="Final"></textarea>
+                <textarea id="textarea_em_midterm" placeholder="Midterm (out of 110)"></textarea>
+                <textarea id="textarea_em_final" placeholder="Final (out of 100)"></textarea>
                 <button onclick="EMcalc()">Calculate EM GPA</button>
             </div>
         </div>
@@ -180,7 +180,9 @@
         <div class="subject-row">
             <h4 class="subject-title">Introduction to Programming</h4>
             <div class="input-group">
-                <textarea id="textarea_prog_assignment" placeholder="Assignment"></textarea>
+                <textarea id="textarea_prog_midterm" placeholder="Midterm (out of 105)"></textarea>
+                <textarea id="textarea_prog_final" placeholder="Final (out of 100)"></textarea>
+                <button onclick="Pcalc()">Calculate Programming GPA</button>
             </div>
         </div>
         <div class="subject-row">
@@ -199,7 +201,8 @@
         function GPAcalc() {
             const SVCcalculatedGPA = SVCcalc();
             const EMcalculatedGPA = EMcalc();
-            const result = document.getElementById("calculatedGPA").innerHTML = ((SVCcalculatedGPA + EMcalculatedGPA)/2).toFixed(2);
+            const PcalculatedGPA = Pcalc();
+            const result = document.getElementById("calculatedGPA").innerHTML = ((SVCcalculatedGPA + EMcalculatedGPA + PcalculatedGPA)/3).toFixed(2);
         }
 
         function SVCcalc() {
@@ -219,6 +222,14 @@
             const EMcalculatedGPA = 0.2*4.3*parseFloat(EMassignment)/100 + 0.4*4.3*parseFloat(EMmidterm)/110 + 0.4*4.3*parseFloat(EMfinal)/100;
             document.getElementById("calculatedGPA").innerHTML = EMcalculatedGPA.toFixed(2);
             return EMcalculatedGPA;
+        }
+
+        function Pcalc() {
+            const Pmidterm = document.getElementById("textarea_prog_midterm").value;
+            const Pfinal = document.getElementById("textarea_prog_final").value;
+            const PcalculatedGPA = 0.2*4.3 + 0.4*4.3*parseFloat(Pmidterm)/105 + 0.4*4.3*parseFloat(Pfinal)/100;
+            document.getElementById("calculatedGPA").innerHTML = PcalculatedGPA.toFixed(2);
+            return PcalculatedGPA;
         }
     </script>
 </body>
